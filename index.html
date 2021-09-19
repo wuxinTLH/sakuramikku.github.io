@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./sakura.png" type="png">
+    <title>桜の小破屋</title>
+    <!-- vue引用 -->
+    <script src="./js/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{welcome}}</h1>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                welcome: '欢迎来到本站点'
+            }
+        })
+    </script>
+</body>
+
+</html>
