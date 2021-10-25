@@ -11,36 +11,7 @@
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <style>
-        li {
-            list-style-type: none;
-        }
 
-        #app .dataList {
-            min-width: 120px;
-            min-height: 120px;
-            height: 200px;
-            padding: 20px;
-            margin: 10px;
-            border: solid 2px rgb(33, 235, 225);
-            overflow: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            border-radius: 1.3vw;
-        }
-
-        #app .dataList::-webkit-scrollbar {
-            display: none;
-        }
-
-        #app .dataList .dataListLi {
-            padding: 5px;
-            margin-top: 10px;
-            width: 100%;
-            height: auto;
-            border: solid 1px rgb(62, 235, 128);
-            font-size: 1.2em;
-            border-radius: 0.8vw;
-        }
     </style>
 </head>
 
@@ -91,7 +62,6 @@
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
-
                 }
             }
         })
