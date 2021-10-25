@@ -1,3 +1,10 @@
+/**
+ * @description:宙斯之战的主方法
+ * @author:桜
+ * @bilibili:https://space.bilibili.com/29058270
+ * @version:0.0.1a
+ */
+
 function main() {
     return false;
 }

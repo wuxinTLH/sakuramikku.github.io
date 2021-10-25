@@ -1,6 +1,11 @@
 * {
     margin: 0;
     padding: 0;
+    border: 0;
+}
+
+li {
+    list-style-type: none;
 }
 
 #app .header {
@@ -34,4 +39,32 @@
 #app .header .des .choice a {
     margin: 100px;
     text-decoration: none;
+}
+
+#app .dataList {
+    min-width: 120px;
+    min-height: 120px;
+    height: 200px;
+    padding: 20px;
+    margin: 10px;
+    border: solid 2px rgb(33, 235, 225);
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 1.3vw;
+}
+
+#app .dataList::-webkit-scrollbar {
+    display: none;
+}
+
+#app .dataList .dataListLi {
+    padding: 5px;
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    border: solid 1px rgb(62, 235, 128);
+    font-size: 1vw;
+    font-weight: 500;
+    border-radius: 0.8vw;
 }
