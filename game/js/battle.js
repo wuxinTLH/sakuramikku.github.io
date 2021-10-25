@@ -1,6 +1,13 @@
-//宙斯升级所需经验
-var levelXpNeed = [100, 200, 300, 500, 700, 1000, 1500, 2000, 3000];
-//宙斯类
+/**
+ * @description:宙斯之战的战斗系统
+ * @author:桜
+ * @bilibili:https://space.bilibili.com/29058270
+ * @version:0.0.1a
+ */
+
+
+//#region 所有生成的class类
+//宙斯
 class Zous {
     hp;
     atta;
@@ -20,14 +27,16 @@ class Zous {
     };
 }
 
-//怪物类
+//怪物
 class Ani {
     hp;
     atta;
     defend;
     name;
     xp;
+    ifBoss;
     constructor(zous) {
+        this.ifBoss = false;
         this.xp;
         this.name = randomName();
         this.hp = randomAttrHp(zous, false);
@@ -35,14 +44,16 @@ class Ani {
         this.defend = randomAttrDef(zous, false);
     };
 }
-//boss类
+//boss
 class Boss {
     hp;
     atta;
     defend;
     name;
     xp;
+    ifBoss;
     constructor(zous) {
+        this.ifBoss = true;
         this.xp;
         this.name = randomName();
         this.hp = randomAttrHp(zous, true);
@@ -51,7 +62,9 @@ class Boss {
         console.log("Boss" + this.name + '出现了');
     }
 }
-//战斗
+//#endregion
+
+//战斗设计主体
 function attack(target, attacker) {
     var damage;
     if (target.defend >= attacker.atta) {
@@ -71,8 +84,7 @@ function attack(target, attacker) {
     if (target.hp == 0) {
         die(target);
         if (attacker.name == "宙斯") {
-            // xp = attacker.level * 10;
-            xp = 100;
+            xp = target.ifBoss ? attacker.level * 30 : attacker.level * 10;
             console.log(attacker.name + '获得了' + xp + '点经验');
             xpGet(attacker, 100);
         }
@@ -86,6 +98,10 @@ function die(target) {
         console.log(target.name + "死亡");
     }
 }
+//#region 宙斯获得所有增益类
+//宙斯升级所需经验 tip:考虑修改
+var levelXpNeed = [100, 200, 300, 500, 700, 1000, 1500, 2000, 3000];
+
 //经验获得
 function xpGet(zous, xp) {
     need = levelXpNeed[zous.level - 1];
@@ -94,6 +110,7 @@ function xpGet(zous, xp) {
         levelUp(zous, need);
     }
 }
+
 //升级
 function levelUp(zous, n) {
     more = zous.xp - n;
@@ -106,6 +123,9 @@ function levelUp(zous, n) {
     zous.defend += 20;
     console.log('宙斯回复到了满血');
 }
+//#endregion
+
+//#region 随机产生的列表
 //产生怪物随机名字
 function randomName() {
     var ln = ['艾伦', '阿比', '艾贝', '安德鲁', '巴顿', '贝克', '鲍勃', '布鲁斯', '查尔斯', '科尔', '克拉克', '乔治', '亨特', '杰克', '约瑟夫', '乔斯达'];
@@ -119,7 +139,7 @@ function randomName() {
 function randomAttrHp(zous, boss) {
     level = zous.level;
     if (boss) {
-        return (level + 2) * (parseInt(Math.random() * 50 + 50));
+        return (level + 1) * (parseInt(Math.random() * 50 + 50));
     } else {
         return level * (parseInt(Math.random() * 50 + 50));
     }
@@ -129,9 +149,9 @@ function randomAttrHp(zous, boss) {
 function randomAttrAtta(zous, boss) {
     lvel = zous.level;
     if (boss) {
-        return (level + 2) * (parseInt(Math.random() * 80 + 20));
+        return (level + 1) * (parseInt(Math.random() * 50 + 20));
     } else {
-        return level * (parseInt(Math.random() * 80 + 20));
+        return level * (parseInt(Math.random() * 30 + 20));
     }
 
 }
@@ -139,8 +159,9 @@ function randomAttrAtta(zous, boss) {
 function randomAttrDef(zous, boss) {
     level = zous.level;
     if (boss) {
-        return (level + 2) * (parseInt(Math.random() * 20 + 30));
+        return (level + 1) * (parseInt(Math.random() * 20 + 20));
     } else {
-        return level * (parseInt(Math.random() * 20 + 30));
+        return level * (parseInt(Math.random() * 20 + 10));
     }
 }
+//#endregion

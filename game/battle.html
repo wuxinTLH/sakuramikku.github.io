@@ -8,6 +8,7 @@
     <title>桜の小破屋</title>
     <script src="../js/vue.js"></script>
     <script src="./js/battle.js"></script>
+    <script src="./js/battle.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <style>
 
@@ -15,32 +16,40 @@
 </head>
 
 <body>
+    <div id="app">
+        <div align=center>
+            目前没有具体内容,请按f12打开管理员工具,在控制台查看信息
+        </div>
+    </div>
+
     <script>
         const zous = new Zous(100, 100, 50);
         var round = 1;
-        while (round < 3) {
-            if (round % 10 == 0) {
+        while (round < 16) {
+            console.log('第' + round + '回合');
+            if (round % 5 == 0) {
                 var boss = new Boss(zous);
-                ata(true);
+                ata(boss, zous);
             } else {
                 var ani = new Ani(zous);
-                ata(false);
+                ata(ani, zous);
             }
+            if (zous.hp <= 0) break;
             round++;
         }
 
-        function ata(boss) {
-            if (boss) {
-                attackChoice = 60;
+        function ata(anime, zous) {
+            if (anime.ifBoss) {
+                attackChoice = 50;
             } else {
                 attackChoice = 40;
             }
-            while (ani.hp > 0 && zous.hp > 0) {
+            while (anime.hp > 0 && zous.hp > 0) {
                 whoAttack = parseInt(Math.random() * 99 + 1);
                 if (whoAttack > attackChoice) {
-                    attack(ani, zous);
+                    attack(anime, zous);
                 } else {
-                    attack(zous, ani);
+                    attack(zous, anime);
                 }
             }
         }
