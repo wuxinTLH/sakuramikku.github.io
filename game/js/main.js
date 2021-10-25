@@ -1,4 +1,8 @@
-var ata = function (anime, zous) {
+function main() {
+    return false;
+}
+
+function ata(anime, zous) {
     if (anime.ifBoss) {
         attackChoice = 60;
     } else {
