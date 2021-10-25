@@ -79,14 +79,14 @@ function attack(target, attacker) {
             damage = attacker.atta - target.defend;
         }
     }
-    console.log(attacker.name + '对' + target.name + '造成了' + damage + '点伤害');
-    console.log(target.name + '剩余' + target.hp + '血');
+    var damege = attacker.name + '对' + target.name + '造成了' + damage + '点伤害';
+    var leftBlood = target.name + '剩余' + target.hp + '血';
     if (target.hp == 0) {
         die(target);
         if (attacker.name == "宙斯") {
             xp = target.ifBoss ? attacker.level * 30 : attacker.level * 10;
-            console.log(attacker.name + '获得了' + xp + '点经验');
-            xpGet(attacker, 100);
+            var xpget = attacker.name + '获得了' + xp + '点经验';
+            var xpg = xpGet(attacker, 100);
         }
     }
     return target.hp;
@@ -95,7 +95,10 @@ function attack(target, attacker) {
 //单位死亡
 function die(target) {
     if (target.hp <= 0) {
-        console.log(target.name + "死亡");
+        var die = target.name + "死亡";
+        return {
+            die: die
+        };
     }
 }
 //#region 宙斯获得所有增益类
@@ -107,7 +110,10 @@ function xpGet(zous, xp) {
     need = levelXpNeed[zous.level - 1];
     zous.xp = zous.xp + xp;
     if (zous.xp >= need) {
-        levelUp(zous, need);
+        var llup = levelUp(zous, need);
+        return {
+            llup: llup
+        };
     }
 }
 
@@ -116,12 +122,16 @@ function levelUp(zous, n) {
     more = zous.xp - n;
     zous.level = zous.level + 1;
     zous.xp = more;
-    console.log('宙斯从' + (zous.level - 1) + '升级到了' + zous.level + '级');
+    var llUp = '宙斯从' + (zous.level - 1) + '升级到了' + zous.level + '级';
     zous.maxHp += 100;
     zous.hp = zous.maxHp;
     zous.atta += 50;
     zous.defend += 20;
-    console.log('宙斯回复到了满血');
+    var treat = '宙斯回复到了满血';
+    return {
+        llUp: llUp,
+        treat: treat
+    };
 }
 //#endregion
 

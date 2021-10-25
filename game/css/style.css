@@ -8,6 +8,10 @@ li {
     list-style-type: none;
 }
 
+#app {
+    width: 100%;
+}
+
 #app .header {
     width: 100%;
     text-align: center;
@@ -43,10 +47,11 @@ li {
 
 #app .dataList {
     min-width: 120px;
+    max-width: 100vw;
     min-height: 120px;
-    height: 200px;
+    height: 40vh;
     padding: 20px;
-    margin: 10px;
+    margin: 0 5vw;
     border: solid 2px rgb(33, 235, 225);
     overflow: auto;
     scrollbar-width: none;
@@ -56,15 +61,4 @@ li {
 
 #app .dataList::-webkit-scrollbar {
     display: none;
-}
-
-#app .dataList .dataListLi {
-    padding: 5px;
-    margin-top: 10px;
-    width: 100%;
-    height: auto;
-    border: solid 1px rgb(62, 235, 128);
-    font-size: 1vw;
-    font-weight: 500;
-    border-radius: 0.8vw;
 }

@@ -11,7 +11,41 @@
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <style>
+        #app .dataList .dataListLi {
+            padding: 5px;
+            margin-top: 10px;
+            width: 100%;
+            height: auto;
+            border: solid 1px rgb(62, 235, 128);
+            font-size: 1vw;
+            font-weight: 500;
+            border-radius: 0.8vw;
+        }
 
+        #app .btn {
+            width: 100%;
+            height: 50px;
+            vertical-align: center;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        #app .btn .checkBtn {
+            margin: 0 20px;
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+        }
+
+        #app .btn .confirmBtn {
+            background: rgb(31, 137, 163, .8);
+            color: rgb(17, 20, 204);
+        }
+
+        #app .btn .otherBtn {
+            background: rgba(15, 218, 133, 0.8);
+            color: rgb(100, 45, 9);
+        }
     </style>
 </head>
 
@@ -27,7 +61,10 @@
                 </li>
             </ul>
         </div>
-        <button @click="confirmBtn">点击添加list内容</button>
+        <div class="btn">
+            <button class="checkBtn confirmBtn" @click="confirmBtn">点击添加list内容</button>
+            <button class="checkBtn otherBtn" @click="otherBtn">点击添加list内容</button>
+        </div>
     </div>
 
     <script>
@@ -56,6 +93,16 @@
                 confirmBtn() {
                     var data = {
                         da: 'helloWorld'
+                    }
+                    this.dataList.push(data);
+                    setTimeout(function () {
+                        var showContent = document.querySelector(".dataList");
+                        showContent.scrollTop = showContent.scrollHeight;
+                    }, 5);
+                },
+                otherBtn() {
+                    var data = {
+                        da: '不好世界'
                     }
                     this.dataList.push(data);
                     setTimeout(function () {
