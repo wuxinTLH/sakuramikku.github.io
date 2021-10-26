@@ -9,6 +9,7 @@
     <script src="../js/vue.js"></script>
     <script src="./js/battle.js"></script>
     <script src="./js/main.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <style>
         #app .dataList .dataListLi {
@@ -55,46 +56,48 @@
             目前没有具体内容,请按f12打开管理员工具,在控制台查看信息
         </div>
         <div class="dataList">
-            <ul class="dataListUl">
-                <li class="dataListLi" v-for="(data,index) in dataList">
-                    {{data.da}}
+            <ul class="dataListUl" v-for="(data,key,index) in dataList">
+                <li v-if="data.round" class="dataListLi">
+                    {{data.round}}
+                </li>
+                <li v-if="data.appear" class="dataListLi">
+                    {{data.appear}}
+                </li>
+                <li v-if="data.damage" class="dataListLi">
+                    {{data.damage}}
+                </li>
+                <li v-if="data.leftBlood" class="dataListLi">
+                    {{data.leftBlood}}
+                </li>
+                <li v-if="data.die" class="dataListLi">
+                    {{data.die}}
+                </li>
+                <li v-if="data.xpget" class="dataListLi">
+                    {{data.xpget}}
+                </li>
+                <li v-if="data.llup" class="dataListLi">
+                    {{data.llup}}
                 </li>
             </ul>
         </div>
         <div class="btn">
-            <button class="checkBtn confirmBtn" @click="confirmBtn">点击添加list内容</button>
+            <button class="checkBtn confirmBtn" @click="confirmBtn">{{leftBtn}}</button>
             <button class="checkBtn otherBtn" @click="otherBtn">点击添加list内容</button>
         </div>
     </div>
 
     <script>
         const zous = new Zous(100, 100, 50);
-        var round = 1;
-        while (round < 16) {
-            console.log('第' + round + '回合');
-            if (round % 5 == 0) {
-                var boss = new Boss(zous);
-                ata(boss, zous);
-            } else {
-                var ani = new Ani(zous);
-                ata(ani, zous);
-            }
-            if (zous.hp <= 0) break;
-            round++;
-        }
         const vm = new Vue({
             el: '#app',
             data: {
-                dataList: [{
-                    da: 'hello'
-                }],
+                dataList: [{}],
+                leftBtn: '1',
             },
             methods: {
                 confirmBtn() {
-                    var data = {
-                        da: 'helloWorld'
-                    }
-                    this.dataList.push(data);
+                    ata(ani, zous);
+                    continuFlag = true;
                     setTimeout(function () {
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
@@ -102,7 +105,7 @@
                 },
                 otherBtn() {
                     var data = {
-                        da: '不好世界'
+                        damage: '不好世界'
                     }
                     this.dataList.push(data);
                     setTimeout(function () {
@@ -111,7 +114,48 @@
                     }, 5);
                 }
             }
-        })
+        });
+        var round = 1;
+        var continuFlag = true;
+
+        function batt(callback) {
+            if (callback && callback instanceof Function) {
+                callback();
+            }
+        }
+        while (round == 1) {
+            vm.dataList.push({
+                round: '第' + round + '回合'
+            });
+            if (round % 5 == 0) {
+                var boss = new Boss(zous);
+                vm.dataList.push({
+                    appear: boss.appear
+                });
+                vm.leftBtn = "攻击Boss";
+                continuFlag = false;
+                //console.log(JSON.parse(ata(boss, zous)));
+                //ata(boss, zous);
+                /*returnVal = JSON.parse(ata(boss, zous));
+                console.log(returnVal);
+                vm.dataList.push(returnVal);*/
+            } else {
+                var ani = new Ani(zous);
+                vm.dataList.push({
+                    appear: ani.appear
+                });
+                vm.leftBtn = "攻击怪物";
+                continuFlag = false;
+                //console.log(JSON.parse(ata(ani, zous)));
+                //console.log(ata(ani, zous));
+                //ata(ani, zous);
+                /*returnVal = JSON.parse(ata(ani, zous));
+                console.log(returnVal);
+                vm.dataList.push(returnVal);*/
+            }
+            if (zous.hp <= 0) break;
+            round++;
+        }
     </script>
 </body>
 

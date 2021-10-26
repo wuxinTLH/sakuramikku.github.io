@@ -35,6 +35,7 @@ class Ani {
     name;
     xp;
     ifBoss;
+    appear;
     constructor(zous) {
         this.ifBoss = false;
         this.xp;
@@ -42,6 +43,7 @@ class Ani {
         this.hp = randomAttrHp(zous, false);
         this.atta = randomAttrAtta(zous, false);
         this.defend = randomAttrDef(zous, false);
+        this.appear = "怪物" + this.name + '出现了';
     };
 }
 //boss
@@ -52,6 +54,7 @@ class Boss {
     name;
     xp;
     ifBoss;
+    appear;
     constructor(zous) {
         this.ifBoss = true;
         this.xp;
@@ -59,13 +62,14 @@ class Boss {
         this.hp = randomAttrHp(zous, true);
         this.atta = randomAttrAtta(zous, true);
         this.defend = randomAttrDef(zous, true);
-        console.log("Boss" + this.name + '出现了');
+        this.appear = "Boss" + this.name + '出现了';
     }
 }
 //#endregion
 
 //战斗设计主体
 function attack(target, attacker) {
+    var val;
     var damage;
     if (target.defend >= attacker.atta) {
         target.hp;
@@ -79,26 +83,46 @@ function attack(target, attacker) {
             damage = attacker.atta - target.defend;
         }
     }
-    var damege = attacker.name + '对' + target.name + '造成了' + damage + '点伤害';
+    damage = attacker.name + '对' + target.name + '造成了' + damage + '点伤害';
     var leftBlood = target.name + '剩余' + target.hp + '血';
     if (target.hp == 0) {
-        die(target);
+        var die = targetDie(target);
+        die = JSON.parse(die);
         if (attacker.name == "宙斯") {
             xp = target.ifBoss ? attacker.level * 30 : attacker.level * 10;
             var xpget = attacker.name + '获得了' + xp + '点经验';
-            var xpg = xpGet(attacker, 100);
+            var xpg = JSON.parse(xpGet(attacker, 10));
+            val = {
+                damage: damage,
+                leftBlood: leftBlood,
+                die: die.die,
+                xpget: xpget,
+                llup: xpg.llup
+            }
+            //console.log(val);
+            // console.log(JSON.stringify(val));
+            return JSON.stringify(val);
         }
     }
-    return target.hp;
+    val = {
+        damege: damage,
+        leftBlood: leftBlood
+    }
+    // console.log(val);
+    // console.log(JSON.stringify(val));
+    return JSON.stringify(val);
+
+
 }
 
 //单位死亡
-function die(target) {
+function targetDie(target) {
     if (target.hp <= 0) {
-        var die = target.name + "死亡";
-        return {
-            die: die
+        var die = {
+            die: target.name + "死亡"
         };
+        //console.log(die);
+        return JSON.stringify(die);
     }
 }
 //#region 宙斯获得所有增益类
@@ -109,11 +133,18 @@ var levelXpNeed = [100, 200, 300, 500, 700, 1000, 1500, 2000, 3000];
 function xpGet(zous, xp) {
     need = levelXpNeed[zous.level - 1];
     zous.xp = zous.xp + xp;
+    var llup
     if (zous.xp >= need) {
-        var llup = levelUp(zous, need);
-        return {
-            llup: llup
+        llup = {
+            llup: JSON.parse(levelUp(zous, need)).llUp
         };
+        // console.log(llup);
+        return JSON.stringify(llup);
+    } else {
+        llup = {
+            llup: '还需要' + (need - zous.xp) + '点经验升级'
+        }
+        return JSON.stringify(llup);
     }
 }
 
@@ -128,10 +159,12 @@ function levelUp(zous, n) {
     zous.atta += 50;
     zous.defend += 20;
     var treat = '宙斯回复到了满血';
-    return {
+    var val = {
         llUp: llUp,
         treat: treat
     };
+    // console.log(val);
+    return JSON.stringify(val);
 }
 //#endregion
 
