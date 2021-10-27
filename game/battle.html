@@ -18,8 +18,8 @@
             width: 100%;
             height: auto;
             border: solid 1px rgb(62, 235, 128);
-            font-size: 1vw;
-            font-weight: 500;
+            font-size: 1.3em;
+            font-weight: 550;
             border-radius: 0.8vw;
         }
 
@@ -32,15 +32,19 @@
         }
 
         #app .btn .checkBtn {
-            margin: 0 20px;
+            margin: 10px 20px;
             display: inline-block;
-            width: 100px;
-            height: 40px;
+            width: 140px;
+            height: 50px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 550;
         }
 
         #app .btn .confirmBtn {
             background: rgb(31, 137, 163, .8);
             color: rgb(17, 20, 204);
+
         }
 
         #app .btn .otherBtn {
@@ -52,8 +56,8 @@
 
 <body>
     <div id="app">
-        <div align=center>
-            目前没有具体内容,请按f12打开管理员工具,在控制台查看信息
+        <div class="gameName">
+            宙斯之战
         </div>
         <div class="dataList">
             <ul class="dataListUl" v-for="(data,key,index) in dataList">
@@ -96,7 +100,11 @@
             },
             methods: {
                 confirmBtn() {
-                    ata(ani, zous);
+                    if (round % 5 == 0) {
+                        ata(boss, zous);
+                    } else {
+                        ata(ani, zous);
+                    }
                     continuFlag = true;
                     setTimeout(function () {
                         var showContent = document.querySelector(".dataList");
@@ -123,7 +131,7 @@
                 callback();
             }
         }
-        while (round == 1) {
+        while (round < 9) {
             vm.dataList.push({
                 round: '第' + round + '回合'
             });
