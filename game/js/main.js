@@ -1,4 +1,5 @@
 /**
+ * @name:主体框架
  * @description:宙斯之战的主方法
  * @author:桜
  * @bilibili:https://space.bilibili.com/29058270
@@ -18,7 +19,6 @@ function ata(anime, zous) {
     while (anime.hp > 0 && zous.hp > 0) {
         whoAttack = parseInt(Math.random() * 99 + 1);
         if (whoAttack > attackChoice) {
-            console.log(JSON.parse(attack(anime, zous)));
             vm.dataList.push(JSON.parse(attack(anime, zous)));
         } else {
             vm.dataList.push(JSON.parse(attack(zous, anime)));

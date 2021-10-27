@@ -10,6 +10,17 @@ li {
 
 #app {
     width: 100%;
+    user-select: none;
+
+}
+
+#app .gameName {
+    text-align: center;
+    color: rgb(226, 99, 141);
+    font-size: 2em;
+    font-weight: 600;
+    text-shadow: 3px 3px 3px #000;
+    user-select: none;
 }
 
 #app .header {
@@ -52,6 +63,7 @@ li {
     height: 40vh;
     padding: 20px;
     margin: 0 5vw;
+    margin-top: 1vh;
     border: solid 2px rgb(33, 235, 225);
     overflow: auto;
     scrollbar-width: none;
