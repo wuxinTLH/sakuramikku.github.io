@@ -17,6 +17,7 @@ class Zous {
     level;
     name;
     maxHp;
+    needXp;
     constructor(h, a, d) {
         this.name = "宙斯";
         this.level = 1;
@@ -25,6 +26,7 @@ class Zous {
         this.defend = d;
         this.xp = 0;
         this.maxHp = this.hp;
+        this.needXp = levelXpNeed[this.level - 1];
     };
 }
 
@@ -94,23 +96,23 @@ function attack(target, attacker) {
             var xpget = attacker.name + '获得了' + xp + '点经验';
             var xpg = JSON.parse(xpGet(attacker, 10));
             val = {
-                damage: damage,
-                leftBlood: leftBlood,
-                die: die.die,
-                xpget: xpget,
-                llup: xpg.llup
-            }
-            //console.log(val);
-            // console.log(JSON.stringify(val));
+                    damage: damage,
+                    leftBlood: leftBlood,
+                    die: die.die,
+                    xpget: xpget,
+                    llup: xpg.llup
+                }
+                //console.log(val);
+                // console.log(JSON.stringify(val));
             return JSON.stringify(val);
         }
     }
     val = {
-        damage: damage,
-        leftBlood: leftBlood
-    }
-    // console.log(val);
-    // console.log(JSON.stringify(val));
+            damage: damage,
+            leftBlood: leftBlood
+        }
+        // console.log(val);
+        // console.log(JSON.stringify(val));
     return JSON.stringify(val);
 
 

@@ -9,7 +9,7 @@
     <script src="../js/vue.js"></script>
     <script src="./js/battle.js"></script>
     <script src="./js/main.js"></script>
-    <script src="../js/jquery-3.6.0.min.js"></script>
+    <!-- <script src="../js/jquery-3.6.0.min.js"></script> -->
     <link rel="stylesheet" href="./css/style.css">
     <style>
         #app .dataList .dataListLi {
@@ -22,7 +22,7 @@
             font-weight: 550;
             border-radius: 0.8vw;
         }
-
+        
         #app .btn {
             width: 100%;
             height: 50px;
@@ -30,7 +30,7 @@
             line-height: 50px;
             text-align: center;
         }
-
+        
         #app .btn .checkBtn {
             margin: 10px 20px;
             display: inline-block;
@@ -40,16 +40,44 @@
             font-size: 1em;
             font-weight: 550;
         }
-
+        
         #app .btn .confirmBtn {
             background: rgb(31, 137, 163, .8);
             color: rgb(17, 20, 204);
-
         }
-
+        
         #app .btn .otherBtn {
             background: rgba(15, 218, 133, 0.8);
             color: rgb(100, 45, 9);
+        }
+        
+        #app .attr {
+            width: 100%;
+        }
+        
+        #app .attr {
+            text-align: center;
+            width: 80%;
+            margin: 10px 50px 0px 150px;
+            border: 1px solid rgba(50, 132, 226, 0.863);
+        }
+        
+        #app .attr .zous .zousInfo {
+            width: 100%;
+            height: 50px;
+        }
+        
+        #app .attr .zous p {
+            color: rgba(238, 146, 25, 0.8);
+        }
+        
+        #app .attr .zous .zousInfo li {
+            color: rgba(247, 74, 30, 0.8);
+            display: inline-block;
+            line-height: 50px;
+            width: 16%;
+            margin: 0px auto;
+            text-align: center;
         }
     </style>
 </head>
@@ -84,6 +112,18 @@
                 </li>
             </ul>
         </div>
+        <div class="attr">
+            <div class="zous">
+                <p>宙斯状态:</p>
+                <ul class="zousInfo">
+                    <li>当前血量:{{vmZous.hp}}</li>
+                    <li>当前攻击力:{{vmZous.atta}}</li>
+                    <li>当前防御力:{{vmZous.defend}}</li>
+                    <li>当前经验:{{vmZous.xp}}/{{vmZous.needXp}}</li>
+                    <li>当前等级:{{vmZous.level}}</li>
+                </ul>
+            </div>
+        </div>
         <div class="btn">
             <button class="checkBtn confirmBtn" @click="confirmBtn">{{leftBtn}}</button>
             <button class="checkBtn otherBtn" @click="otherBtn">点击添加list内容</button>
@@ -97,6 +137,7 @@
             data: {
                 dataList: [{}],
                 leftBtn: '1',
+                vmZous: zous,
             },
             methods: {
                 confirmBtn() {
@@ -106,7 +147,7 @@
                         ata(ani, zous);
                     }
                     continuFlag = true;
-                    setTimeout(function () {
+                    setTimeout(function() {
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
@@ -116,7 +157,7 @@
                         damage: '不好世界'
                     }
                     this.dataList.push(data);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
