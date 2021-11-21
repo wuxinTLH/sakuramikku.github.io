@@ -101,7 +101,6 @@ function attack(target, attacker) {
                     die: die.die,
                     xpget: xpget,
                     llup: xpg.llup,
-                    needXp: levelXpNeed[zous.level - 1]
                 }
                 //console.log(val);
                 // console.log(JSON.stringify(val));
@@ -169,6 +168,10 @@ function levelUp(zous, n) {
     };
     // console.log(val);
     return JSON.stringify(val);
+}
+//获取升级所需经验
+function needZousXp(zous) {
+    return levelXpNeed[zous.level - 1];
 }
 //#endregion
 

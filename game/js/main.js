@@ -12,7 +12,6 @@ function main() {
 }
 
 function ata(anime, zous) {
-    console.log(anime.ifBoss);
     if (anime.ifBoss) {
         attackChoice = 60;
     } else {
@@ -22,8 +21,10 @@ function ata(anime, zous) {
         whoAttack = parseInt(Math.random() * 99 + 1);
         if (whoAttack > attackChoice) {
             vm.dataList.push(JSON.parse(attack(anime, zous)));
+            vm.vmZous.needXp = needZousXp(vm.vmZous);
         } else {
             vm.dataList.push(JSON.parse(attack(zous, anime)));
+            vm.vmZous.needXp = needZousXp(vm.vmZous);
         }
     }
 }
