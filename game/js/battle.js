@@ -93,7 +93,7 @@ function attack(target, attacker) {
         die = JSON.parse(die);
         if (attacker.name == "宙斯") {
             console.log('怪物是boss吗？' + target.ifBoss);
-            xp = target.ifBoss ? attacker.level * 30 : attacker.level * 10;
+            xp = target.ifBoss ? attacker.level * 50 : attacker.level * 10;
             var xpget = attacker.name + '获得了' + xp + '点经验';
             var xpg = JSON.parse(xpGet(attacker, xp));
             val = {
