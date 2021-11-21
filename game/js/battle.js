@@ -1,9 +1,9 @@
 /**
- * @name:战斗框架
- * @description:宙斯之战的战斗系统,用于各种class以及战斗方法的储存
- * @author:桜
- * @bilibili:https://space.bilibili.com/29058270
- * @version:0.0.1a
+ * @name 战斗框架
+ * @description 宙斯之战的战斗系统,用于各种class以及战斗方法的储存
+ * @author 桜
+ * @bilibili https://space.bilibili.com/29058270
+ * @version 0.0.1a
  */
 
 
@@ -100,7 +100,8 @@ function attack(target, attacker) {
                     leftBlood: leftBlood,
                     die: die.die,
                     xpget: xpget,
-                    llup: xpg.llup
+                    llup: xpg.llup,
+                    needXp: levelXpNeed[zous.level - 1]
                 }
                 //console.log(val);
                 // console.log(JSON.stringify(val));

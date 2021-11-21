@@ -2,15 +2,15 @@
 <html lang="zh">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../sakura.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../sakura.png" />
     <title>桜の小破屋</title>
     <script src="../js/vue.js"></script>
     <script src="./js/battle.js"></script>
     <script src="./js/main.js"></script>
     <!-- <script src="../js/jquery-3.6.0.min.js"></script> -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css" />
     <style>
         #app .dataList .dataListLi {
             padding: 5px;
@@ -42,7 +42,7 @@
         }
         
         #app .btn .confirmBtn {
-            background: rgb(31, 137, 163, .8);
+            background: rgb(31, 137, 163, 0.8);
             color: rgb(17, 20, 204);
         }
         
@@ -52,64 +52,37 @@
         }
         
         #app .attr {
-            width: 100%;
-        }
-        
-        #app .attr {
-            text-align: center;
-            width: 80%;
-            margin: 10px 50px 0px 150px;
+            min-width: 120px;
+            max-width: 100vw;
+            padding: 20px;
+            margin: 0 5vw;
+            margin-top: 1vh;
+            overflow: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             border: 1px solid rgba(50, 132, 226, 0.863);
+            border-radius: 1.3vw;
         }
         
-        #app .attr .zous .zousInfo {
-            width: 100%;
-            height: 50px;
-        }
-        
+        #app .attr .zous .zousInfo li,
         #app .attr .zous p {
-            color: rgba(238, 146, 25, 0.8);
-        }
-        
-        #app .attr .zous .zousInfo li {
-            color: rgba(247, 74, 30, 0.8);
-            display: inline-block;
-            line-height: 50px;
-            width: 16%;
-            margin: 0px auto;
-            text-align: center;
+            font-size: 1.2em;
         }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <div class="gameName">
-            宙斯之战
-        </div>
+        <div class="gameName">宙斯之战</div>
         <div class="dataList">
             <ul class="dataListUl" v-for="(data,key,index) in dataList">
-                <li v-if="data.round" class="dataListLi">
-                    {{data.round}}
-                </li>
-                <li v-if="data.appear" class="dataListLi">
-                    {{data.appear}}
-                </li>
-                <li v-if="data.damage" class="dataListLi">
-                    {{data.damage}}
-                </li>
-                <li v-if="data.leftBlood" class="dataListLi">
-                    {{data.leftBlood}}
-                </li>
-                <li v-if="data.die" class="dataListLi">
-                    {{data.die}}
-                </li>
-                <li v-if="data.xpget" class="dataListLi">
-                    {{data.xpget}}
-                </li>
-                <li v-if="data.llup" class="dataListLi">
-                    {{data.llup}}
-                </li>
+                <li v-if="data.round" class="dataListLi">{{data.round}}</li>
+                <li v-if="data.appear" class="dataListLi">{{data.appear}}</li>
+                <li v-if="data.damage" class="dataListLi">{{data.damage}}</li>
+                <li v-if="data.leftBlood" class="dataListLi">{{data.leftBlood}}</li>
+                <li v-if="data.die" class="dataListLi">{{data.die}}</li>
+                <li v-if="data.xpget" class="dataListLi">{{data.xpget}}</li>
+                <li v-if="data.llup" class="dataListLi">{{data.llup}}</li>
             </ul>
         </div>
         <div class="attr">
@@ -125,23 +98,34 @@
             </div>
         </div>
         <div class="btn">
-            <button class="checkBtn confirmBtn" @click="confirmBtn">{{leftBtn}}</button>
-            <button class="checkBtn otherBtn" @click="otherBtn">点击添加list内容</button>
+            <button class="checkBtn confirmBtn" @click="confirmBtn">
+                {{leftBtn}}
+            </button>
+            <button class="checkBtn otherBtn" @click="otherBtn">
+                点击添加list内容
+            </button>
         </div>
     </div>
 
     <script>
-        const zous = new Zous(100, 100, 50);
-        const vm = new Vue({
-            el: '#app',
+        //全局变量区
+        var round = 1;
+        var continuFlag = true;
+        var zous = new Zous(100, 200, 200);
+        var boss;
+        var ani;
+
+        var vm = new Vue({
+            el: "#app",
             data: {
                 dataList: [{}],
-                leftBtn: '1',
+                leftBtn: "1",
                 vmZous: zous,
             },
             methods: {
                 confirmBtn() {
-                    if (round % 5 == 0) {
+                    var _this_round = round - 1;
+                    if (_this_round % 5 == 0) {
                         ata(boss, zous);
                     } else {
                         ata(ani, zous);
@@ -151,47 +135,64 @@
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
+                    continuBattle(round);
                 },
                 otherBtn() {
                     var data = {
-                        damage: '不好世界'
-                    }
+                        damage: "不好世界",
+                    };
                     this.dataList.push(data);
                     setTimeout(function() {
                         var showContent = document.querySelector(".dataList");
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
-                }
-            }
+                },
+            },
         });
-        var round = 1;
-        var continuFlag = true;
+
+
 
         function batt(callback) {
             if (callback && callback instanceof Function) {
                 callback();
             }
         }
-        while (round < 9) {
-            vm.dataList.push({
-                round: '第' + round + '回合'
-            });
-            if (round % 5 == 0) {
+
+        function aniCreated(rou) {
+            if (rou % 5 == 0) {
                 var boss = new Boss(zous);
+                continuFlag = false;
+                return boss;
+            } else {
+                var ani = new Ani(zous);
+                continuFlag = false;
+                return ani;
+            }
+        }
+
+        function continuBattle(rou) {
+            vm.dataList.push({
+                round: "第" + rou + "回合",
+            });
+            if (rou % 5 == 0) {
+                console.log('boss生成')
+                boss = new aniCreated(rou);
+                //console.log(boss);
                 vm.dataList.push({
-                    appear: boss.appear
+                    appear: boss.appear,
                 });
                 vm.leftBtn = "攻击Boss";
                 continuFlag = false;
                 //console.log(JSON.parse(ata(boss, zous)));
                 //ata(boss, zous);
                 /*returnVal = JSON.parse(ata(boss, zous));
-                console.log(returnVal);
-                vm.dataList.push(returnVal);*/
+                    console.log(returnVal);
+                    vm.dataList.push(returnVal);*/
             } else {
-                var ani = new Ani(zous);
+                ani = new aniCreated(rou);
+                //console.log(ani);
                 vm.dataList.push({
-                    appear: ani.appear
+                    appear: ani.appear,
                 });
                 vm.leftBtn = "攻击怪物";
                 continuFlag = false;
@@ -199,11 +200,41 @@
                 //console.log(ata(ani, zous));
                 //ata(ani, zous);
                 /*returnVal = JSON.parse(ata(ani, zous));
-                console.log(returnVal);
-                vm.dataList.push(returnVal);*/
+                    console.log(returnVal);
+                    vm.dataList.push(returnVal);*/
+            }
+            if (zous.hp <= 0) {
+                console.log('宙斯死亡');
+            };
+            round++;
+            console.log(round);
+        }
+        if (round == 1) {
+            continuBattle(round);
+            /*
+                vm.dataList.push({
+                round: "第" + round + "回合",
+            });
+            if (round % 5 == 0) {
+                var boss = new aniCreated(round);
+                console.log(boss);
+                vm.dataList.push({
+                    appear: boss.appear,
+                });
+                vm.leftBtn = "攻击Boss";
+                continuFlag = false;
+            } else {
+                var ani = new aniCreated(round);
+                console.log(ani);
+                vm.dataList.push({
+                    appear: ani.appear,
+                });
+                vm.leftBtn = "攻击怪物";
+                continuFlag = false;
             }
             if (zous.hp <= 0) break;
             round++;
+            */
         }
     </script>
 </body>
