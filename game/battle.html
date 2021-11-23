@@ -17,7 +17,7 @@
             margin-top: 10px;
             width: 100%;
             height: auto;
-            border: solid 1px rgb(62, 235, 128);
+            border: solid 1px rgb(62, 173, 201);
             font-size: 1.3em;
             font-weight: 550;
             border-radius: 0.8vw;
@@ -64,9 +64,33 @@
             border-radius: 1.3vw;
         }
         
+        #app .attr .zous .zousInfo,
+        #app .attr .zous .aniInfo {
+            width: 240px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+        }
+        
         #app .attr .zous .zousInfo li,
-        #app .attr .zous p {
+        #app .attr .zous p,
+        #app .attr .zous .aniInfo li {
             font-size: 1.2em;
+        }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+        
+        input {
+            -moz-appearance: textfield;
+        }
+        
+        #app .zousCreated .zousAttack,
+        #app .zousCreated .zousDefend {
+            border: 1px solid #f0e0ff;
         }
     </style>
 </head>
@@ -74,7 +98,15 @@
 <body>
     <div id="app">
         <div class="gameName">宙斯之战</div>
-        <div class="dataList">
+        <div class="zousCreated" v-show="!zousCreated">
+            <p class="">宙斯属性点：可用{{zousPoint}} <button @click="zousPointRandom">重随属性点</button></p>
+            <ul>
+                <li>血量：200(固定)</li>
+                <li>攻击力：<input type="number" name="" id="" class="zousAttack" v-model="zousAttack"></li>
+                <li>防御力：<input type="number" name="" id="" class="zousDefend" v-model="zousDefend"></li>
+            </ul>
+        </div>
+        <div class="dataList" v-show="zousCreated">
             <ul class="dataListUl" v-for="(data,key,index) in dataList">
                 <li v-if="data.round" class="dataListLi">{{data.round}}</li>
                 <li v-if="data.appear" class="dataListLi">{{data.appear}}</li>
@@ -85,15 +117,21 @@
                 <li v-if="data.llup" class="dataListLi">{{data.llup}}</li>
             </ul>
         </div>
-        <div class="attr">
+        <div class="attr" v-show="zousCreated">
             <div class="zous">
-                <p>宙斯状态:</p>
+                <p><span style="color: rgb(0, 119, 255);">宙斯</span> 状态:</p>
                 <ul class="zousInfo">
-                    <li>当前血量:{{vmZous.hp}}</li>
+                    <li>当前血量:{{vmZous.hp}}&nbsp;&nbsp;&nbsp;</li>
                     <li>当前攻击力:{{vmZous.atta}}</li>
                     <li>当前防御力:{{vmZous.defend}}</li>
                     <li>当前经验:{{vmZous.xp}}/{{vmZous.needXp}}</li>
                     <li>当前等级:{{vmZous.level}}</li>
+                </ul>
+                <p><span style="color: red;">敌人</span> <em>{{vmAni.name}}</em> 状态:</p>
+                <ul class="aniInfo">
+                    <li>血量:{{vmAni.hp}}&nbsp;&nbsp;&nbsp;</li>
+                    <li>攻击力:{{vmAni.atta}}</li>
+                    <li>防御力:{{vmAni.defend}}</li>
                 </ul>
             </div>
         </div>
@@ -102,7 +140,7 @@
                 {{leftBtn}}
             </button>
             <button class="checkBtn otherBtn" @click="otherBtn">
-                点击添加list内容
+                创建宙斯
             </button>
         </div>
     </div>
@@ -111,7 +149,7 @@
         //全局变量区
         var round = 1;
         var continuFlag = true;
-        var zous = new Zous(100, 100, 50);
+        var zous = new Zous(1, 0, 0);
         var boss;
         var ani;
 
@@ -121,10 +159,16 @@
                 dataList: [{}],
                 leftBtn: "1",
                 vmZous: zous,
+                zousPoint: 200,
+                zousCreated: false,
+                zousAttack: 0,
+                zousDefend: 0,
+                vmAni: null
             },
             methods: {
                 confirmBtn() {
                     var _this_round = round - 1;
+                    console.log(_this_round + '这回合');
                     if (_this_round % 5 == 0) {
                         ata(boss, zous);
                     } else {
@@ -136,17 +180,46 @@
                         showContent.scrollTop = showContent.scrollHeight;
                     }, 5);
                     continuBattle(round);
+                    if (zous.hp == 0) {
+                        console.log('宙斯死亡');
+                        zous = new Zous(1, 0, 0);
+                        this.vmZous = zous;
+                        this.zousDefend = 0;
+                        this.zousAttack = 0;
+                        this.zousPoint = MathRandom(150, 250);
+                        this.zousCreated = false;
+                        this.dataList = [];
+                        round = 1;
+                        alert('宙斯死亡!请重新再来');
+                    }
+                    /*if (zous.hp == 0) {
+                        this.zousCreated = false;
+                        this.zousPoint = MathRandom(150, 250);
+                        this.zousAttack = 0;
+                        this.zousDefend = 0;
+                        this.vmZous = null; 
+                    }*/
                 },
                 otherBtn() {
-                    var data = {
-                        damage: "不好世界",
-                    };
-                    this.dataList.push(data);
-                    setTimeout(function() {
-                        var showContent = document.querySelector(".dataList");
-                        showContent.scrollTop = showContent.scrollHeight;
-                    }, 5);
+                    var zA = parseInt(this.zousAttack);
+                    var zD = parseInt(this.zousDefend);
+                    var zP = parseInt(this.zousPoint)
+                    if (zA + zD > zP) {
+                        alert('请查看攻击力和防御力总和是否小于等于可用点数：' + this.zousPoint);
+                        return;
+                    } else if (zA == 0 && zD == 0) {
+                        alert('请输入攻击力和防御力');
+                        return;
+                    } else {
+                        zous = new Zous(200, zA, zD);
+                        this.vmZous = zous;
+                        ani = new Ani(zous);
+                        return this.zousCreated = true;
+                    }
                 },
+                zousPointRandom() {
+                    this.zousPoint = MathRandom(150, 300)
+                }
             },
         });
 
@@ -181,6 +254,7 @@
                 vm.dataList.push({
                     appear: boss.appear,
                 });
+                vm.vmAni = boss;
                 vm.leftBtn = "攻击Boss";
                 continuFlag = false;
                 //console.log(JSON.parse(ata(boss, zous)));
@@ -194,6 +268,7 @@
                 vm.dataList.push({
                     appear: ani.appear,
                 });
+                vm.vmAni = ani;
                 vm.leftBtn = "攻击怪物";
                 continuFlag = false;
                 //console.log(JSON.parse(ata(ani, zous)));
@@ -209,6 +284,7 @@
             round++;
         }
         if (round == 1) {
+            vm.zousPoint = MathRandom(150, 300);
             continuBattle(round);
             /*
                 vm.dataList.push({

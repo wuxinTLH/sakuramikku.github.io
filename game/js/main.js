@@ -3,7 +3,7 @@
  * @description 宙斯之战的主方法
  * @author 桜
  * @bilibili https://space.bilibili.com/29058270
- * @version 0.0.1a
+ * @version 0.1.0
  */
 
 
@@ -27,4 +27,8 @@ function ata(anime, zous) {
             vm.vmZous.needXp = needZousXp(vm.vmZous);
         }
     }
+}
+
+function MathRandom(l, r) {
+    return parseInt(Math.random() * (r - l) + l);
 }

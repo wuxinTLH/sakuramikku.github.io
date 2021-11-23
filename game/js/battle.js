@@ -3,7 +3,7 @@
  * @description 宙斯之战的战斗系统,用于各种class以及战斗方法的储存
  * @author 桜
  * @bilibili https://space.bilibili.com/29058270
- * @version 0.0.1a
+ * @version 0.1.0
  */
 
 
@@ -158,10 +158,10 @@ function levelUp(zous, n) {
     zous.level = zous.level + 1;
     zous.xp = more;
     var llUp = '宙斯从' + (zous.level - 1) + '升级到了' + zous.level + '级';
-    zous.maxHp += 100;
+    zous.maxHp += MathRandom(80, 200);
     zous.hp = zous.maxHp;
-    zous.atta += 50;
-    zous.defend += 20;
+    zous.atta += MathRandom(40, 100);
+    zous.defend += MathRandom(20, 40);
     var treat = '宙斯回复到了满血';
     var val = {
         llUp: llUp,
@@ -172,15 +172,19 @@ function levelUp(zous, n) {
 }
 //获取升级所需经验
 function needZousXp(zous) {
-    return levelXpNeed[zous.level - 1];
+    if (zous.level < 10) {
+        return levelXpNeed[zous.level - 1];
+    } else {
+        return '*'
+    }
 }
 //#endregion
 
 //#region 随机产生的列表
 //产生怪物随机名字
 function randomName() {
-    var ln = ['艾伦', '阿比', '艾贝', '安德鲁', '巴顿', '贝克', '鲍勃', '布鲁斯', '查尔斯', '科尔', '克拉克', '乔治', '亨特', '杰克', '约瑟夫', '乔斯达'];
-    var fn = ['阿尔文', '安迪', '	安德鲁', '乔纳森', '阿伯克龙比', '艾格尼丝', '阿诺德', '阿德金斯', '阿奇柏德', '亚伯拉罕斯', '阿曼达'];
+    var ln = ['艾伦', '阿比', '艾贝', '安德鲁', '巴顿', '贝克', '鲍勃', '布鲁斯', '查尔斯', '科尔', '克拉克', '乔治', '亨特', '杰克', '约瑟夫', '乔斯达', '安格洛', '安哥拉', '盎格鲁'];
+    var fn = ['阿尔文', '安迪', '	安德鲁', '乔纳森', '阿伯克龙比', '艾格尼丝', '阿诺德', '阿德金斯', '阿奇柏德', '亚伯拉罕斯', '阿曼达', '约瑟夫', '乔斯达', '安格洛', '安哥拉', '盎格鲁'];
     var firstName = fn[parseInt(Math.random() * fn.length)];
     var lastName = ln[parseInt(Math.random() * fn.length)];
     return firstName + ' · ' + lastName;
@@ -200,9 +204,9 @@ function randomAttrHp(zous, boss) {
 function randomAttrAtta(zous, boss) {
     lvel = zous.level;
     if (boss) {
-        return (level + 1) * (parseInt(Math.random() * 50 + 20));
+        return (level + 1) * MathRandom(40, 95);
     } else {
-        return level * (parseInt(Math.random() * 30 + 20));
+        return level * MathRandom(40, 80);
     }
 
 }
@@ -210,9 +214,9 @@ function randomAttrAtta(zous, boss) {
 function randomAttrDef(zous, boss) {
     level = zous.level;
     if (boss) {
-        return (level + 1) * (parseInt(Math.random() * 20 + 20));
+        return (level + 1) * MathRandom(30, 50);
     } else {
-        return level * (parseInt(Math.random() * 20 + 10));
+        return level * MathRandom(20, 40);
     }
 }
 //#endregion
