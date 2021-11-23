@@ -9,9 +9,9 @@ li {
 }
 
 #app {
+    background-color: rgb(255, 255, 255);
     width: 100%;
     user-select: none;
-
 }
 
 #app .gameName {
@@ -69,8 +69,110 @@ li {
     scrollbar-width: none;
     -ms-overflow-style: none;
     border-radius: 1.3vw;
+    background-color: rgb(201, 199, 199);
+}
+
+#app .zousCreated {
+    text-align: center;
+    margin: 0 auto;
+    width: 25vw;
+    min-height: 120px;
+    padding: 10px;
+    border: solid 2px rgb(33, 235, 225);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 1.3vw;
+}
+
+#app .dataList .dataListUl {
+    /* background-color: #fff; */
+}
+
+#app .dataList .dataListUl li {
+    color: rgba(0, 255, 255, 0.678);
 }
 
 #app .dataList::-webkit-scrollbar {
     display: none;
+}
+
+#app .dataList .dataListLi {
+    padding: 5px;
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    border: solid 1px rgb(62, 173, 201);
+    font-size: 1.3em;
+    font-weight: 550;
+    border-radius: 0.8vw;
+}
+
+#app .btn {
+    width: 100%;
+    height: 50px;
+    vertical-align: center;
+    line-height: 50px;
+    text-align: center;
+}
+
+#app .btn .checkBtn {
+    margin: 10px 20px;
+    display: inline-block;
+    width: 140px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 1em;
+    font-weight: 550;
+}
+
+#app .btn .confirmBtn {
+    background: rgb(31, 137, 163, 0.8);
+    color: rgb(17, 20, 204);
+}
+
+#app .btn .otherBtn {
+    background: rgba(15, 218, 133, 0.8);
+    color: rgb(100, 45, 9);
+}
+
+#app .attr {
+    min-width: 120px;
+    max-width: 100vw;
+    padding: 20px;
+    margin: 0 5vw;
+    margin-top: 1vh;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border: 1px solid rgba(50, 132, 226, 0.863);
+    border-radius: 1.3vw;
+}
+
+#app .attr .zous .zousInfo,
+#app .attr .zous .aniInfo {
+    width: 240px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+}
+
+#app .attr .zous .zousInfo li,
+#app .attr .zous p,
+#app .attr .zous .aniInfo li {
+    font-size: 1.2em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input {
+    -moz-appearance: textfield;
+}
+
+#app .zousCreated .zousAttack,
+#app .zousCreated .zousDefend {
+    border: 1px solid #f0e0ff;
 }
